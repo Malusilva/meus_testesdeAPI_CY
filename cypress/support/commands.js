@@ -49,5 +49,19 @@ Cypress.Commands.add('token', (email, senha) => {
             "quantidade": quantidade
           }, 
           failOnStatusCode: false
-    })
- })
+    });
+ });
+
+ Cypress.Commands.add('cadastarUsuario' , (nome, email, senha, verdadeiro) => {
+    cy.request({
+        method: 'POST',
+        url: 'usuarios',
+        body: {
+            "nome": nome,
+            "email": email,
+            "password": senha,
+            "administrador": verdadeiro,
+          },
+        failOnStatusCode: false
+        });    
+}); 
