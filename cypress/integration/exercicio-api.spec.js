@@ -43,6 +43,7 @@ describe('Testes da Funcionalidade Usuários', () => {
     });
 
     it('Deve editar um usuário previamente cadastrado', () => {
+        let usuario = `Maria da Silva ${Math.floor(Math.random() * 100000000)}`
         cy.request('usuarios').then((response) => {
           let id = response.body.usuarios[0]._id
             cy.request({
@@ -50,7 +51,7 @@ describe('Testes da Funcionalidade Usuários', () => {
               url: `usuarios/${id}`,
               body:
               {
-               "nome": "Maria da Silva",
+               "nome": produto,
                "email": "maria@qa.com.br",
                "password": "teste1",
                "administrador": "true"
@@ -75,6 +76,5 @@ describe('Testes da Funcionalidade Usuários', () => {
             })
     })  
     });
-
 
 });

@@ -14,20 +14,20 @@
 
 Via terminal, rode os seguintes comandos:
 ```  
-git clone https://github.com/EBAC-QE/testes-api-cy.git
+git clone https://github.com/EBAC-QE/testes-api-cy.git ok
 ```
 ```
-cd testes-api-cy
+cd testes-api-cy ok 
 ```
 
 #### Para instalar as dependencias:
 ```
-npm install 
+npm install ok
 ```
 
 #### Para subir o servidor:
 ```
-npm start
+npm start ok
 ```
 
 #### Para executar em moodo Headlesss via console:
@@ -37,7 +37,7 @@ npx cypress run
 
 #### Para executar via Dashboard:
 ```
-npx cypress open 
+npx cypress open ok
 ```
 Após abrir o dasboard, clique na opção "Running integration tests" para rodar todos os testes.
 
