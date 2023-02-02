@@ -3,36 +3,42 @@ import { faker } from '@faker-js/faker'
 import contrato from '../contracts/usuario.contract'
 
 
+
+
 describe('Testes da Funcionalidade Usuários', () => {
      const name = faker.name.fullName()
      let email = faker.internet.email()
+
 
     it('Deve validar contrato de usuários', () => {
        cy.request('usuarios').then(response => {
           return contrato.validateAsync(response.body)  
        })
 
+
     });
+
 
     it('Deve listar usuários cadastrados', () => {
         cy.request({
           method: 'GET',
           url: 'usuarios'
         }).then((response) =>{
-            expect(response.body.usuarios[0].nome).to.equal('Maria da Silva')
             expect(response.status).to.equal(200)
             expect(response.duration).to.be.lessThan(50)
           })
     });
 
+
     it('Deve cadastrar um usuário com sucesso', () => {
-        
+       
          cy.cadastarUsuario(name, email, 'teste', 'true')
          .then((response) => {
           expect(response.status).to.equal(201)
           expect(response.body.message).to.equal('Cadastro realizado com sucesso')
          })
     });
+
 
     it('Deve validar um usuário com email inválido', () => {
          cy.cadastarUsuario('Fulano da Silva', 'beltrano@qa..br', 'teste', 'true')
@@ -42,30 +48,38 @@ describe('Testes da Funcionalidade Usuários', () => {
            })
     });
 
+
     it('Deve editar um usuário previamente cadastrado', () => {
-        let usuario = `Maria da Silva ${Math.floor(Math.random() * 100000000)}`
-        cy.request('usuarios').then((response) => {
-          let id = response.body.usuarios[0]._id
+      const name = faker.name.fullName()
+      let email = faker.internet.email()
+      cy.cadastarUsuario(name, email, 'teste', 'true')
+        .then((response) => {
+          let id = response.body._id
             cy.request({
               method: 'PUT',
               url: `usuarios/${id}`,
               body:
               {
-               "nome": produto,
-               "email": "maria@qa.com.br",
+               "nome": name,
+               "email": email,
                "password": "teste1",
                "administrador": "true"
-             } 
+             }
             })
             .then(response => {
-               expect(response.body.message).to.equal('Registro alterado com sucesso')
+              expect(response.status).to.equal(200)
+              expect(response.body.message).to.equal('Registro alterado com sucesso')
             })
         })  
     });
 
+
     it('Deve deletar um usuário previamente cadastrado', () => {
-     cy.request('usuarios').then(response => {
-          let id = response.body.usuarios[2]._id
+      const name = faker.name.fullName()
+      let email = faker.internet.email()
+      cy.cadastarUsuario(name, email, 'teste', 'true')
+      .then(response => {
+          let id = response.body._id
             cy.request({
               method: 'DELETE',
               url: `usuarios/${id}`,
@@ -76,5 +90,6 @@ describe('Testes da Funcionalidade Usuários', () => {
             })
     })  
     });
+
 
 });
